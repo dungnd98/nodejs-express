@@ -5,10 +5,14 @@
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 //template pug
 app.set('view engine', 'pug');
 app.set('views', './views');
+
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 var todos = [
     {name: 'Đi chợ'},
@@ -23,9 +27,25 @@ app.get('/', (req, res) => {
 });
 
 app.get('/todos', (req, res) => {
-  res.render('todos/index', {
-    todos: todos
+  var q = req.query.q;
+  if(!q) {
+    res.render('todos/index', {
+      todos: todos
+    })
+  }
+  var matchList = todos.filter((todo) => {
+    return todo.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
   });
+  res.render('todos/index', {
+    todos: matchList,
+    contentSearch: q
+  });
+});
+
+app.post('/todos/create', (req, res) => {
+  todos.push(req.body);
+  console.log(todos);
+  res.redirect('/todos');
 });
 
 
