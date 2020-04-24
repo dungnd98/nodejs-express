@@ -3,8 +3,10 @@ form(action="/todos" method="GET")
   input(type="text" name="q" value=contentSearch)
   button Search
 form(action="/todos/create" method="POST")
-  input(type="text" name="name")
+  input(type="text" name="newItem")
   button Create
 ul
   each todo in todos
-    li= todo.name
+    li
+      span=todo.content 
+      a(href="/todos/"+ todo.id +"/delete") Xóa

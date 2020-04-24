@@ -1,0 +1,16 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "content": "Đi ngủ"
+    },
+    {
+      "id": 2,
+      "content": "Rửa bát"
+    },
+    {
+      "id": 3,
+      "content": "Học code tại CodersX"
+    }
+  ]
+}
